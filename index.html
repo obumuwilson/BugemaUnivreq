@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requisition Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hidden { display: none; }
+        .form-section { margin-bottom: 30px; }
+        h4 {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .form-control, .btn {
+            border-radius: 0;
+        }
+        .btn-primary, .btn-success {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover, .btn-success:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Requisition Form</h2>
+        <form id="requisitionForm">
+            <!-- Employee Details -->
+            <div class="form-section">
+                <h4>Employee Details</h4>
+                <div class="form-group">
+                    <label for="employeeName">Name</label>
+                    <input type="text" class="form-control" id="employeeName" required>
+                </div>
+                <div class="form-group">
+                    <label for="telNo">Telephone Number</label>
+                    <input type="tel" class="form-control" id="telNo" required>
+                </div>
+                <div class="form-group">
+                    <label for="employeeCode">Employee Code</label>
+                    <input type="text" class="form-control" id="employeeCode" required>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMode">Mode of Payment</label>
+                    <select class="form-control" id="paymentMode" required>
+                        <option value="">Select Payment Mode</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
+                    </select>
+                </div>
+                <div id="bankDetails" class="hidden">
+                    <div class="form-group">
+                        <label for="bankName">Bank Name</label>
+                        <input type="text" class="form-control" id="bankName">
+                    </div>
+                    <div class="form-group">
+                        <label for="bankAccountNo">Bank Account Number</label>
+                        <input type="text" class="form-control" id="bankAccountNo">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="showNextSection('departmentDetails')">Submit</button>
+            </div>
+
+            <!-- Department Details -->
+            <div id="departmentDetails" class="form-section hidden">
+                <h4>Department Details</h4>
+                <div class="form-group">
+                    <label for="employeeID">Employee ID</label>
+                    <input type="text" class="form-control" id="employeeID" required>
+                </div>
+                <div class="form-group">
+                    <label for="supervisorName">Supervisor Name</label>
+                    <input type="text" class="form-control" id="supervisorName" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <input type="text" class="form-control" id="role" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="showNextSection('approvalSection')">Approve</button>
+            </div>
+
+            <!-- Approval Section -->
+            <div id="approvalSection" class="form-section hidden">
+                <h4>Approval Section</h4>
+                <div class="form-group">
+                    <label for="supervisorApproval">Supervisor Approval</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="supervisorApproval">
+                        <label class="form-check-label" for="supervisorApproval">Approved</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="businessOfficeApproval">Business Office Approval</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="businessOfficeApproval">
+                        <label class="form-check-label" for="businessOfficeApproval">Approved</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="counterApproval">Counter (Cashier) Approval</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="counterApproval">
+                        <label class="form-check-label" for="counterApproval">Approved</label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="showNextSection('paymentDetails')">Next</button>
+            </div>
+
+            <!-- Payment Details -->
+            <div id="paymentDetails" class="form-section hidden">
+                <h4>Payment Details</h4>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" class="form-control" id="amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="amountWords">Amount in Words</label>
+                    <input type="text" class="form-control" id="amountWords" required>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <textarea class="form-control" id="reason" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('paymentMode').addEventListener('change', function () {
+            const bankDetails = document.getElementById('bankDetails');
+            if (this.value === 'Bank') {
+                bankDetails.classList.remove('hidden');
+            } else {
+                bankDetails.classList.add('hidden');
+            }
+        });
+
+        function showNextSection(sectionId) {
+            document.querySelectorAll('.form-section').forEach(section => section.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
